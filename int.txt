@@ -31,42 +31,21 @@ const populate = (data) => {
     )
     .join("");
 
-  if (+findYear.value) {
-    const filteredData = data.filter((val) => val.year == +findYear.value);
-    console.log(filteredData);
-    const titles = filteredData.reduce((acc, val) => {
-      acc.push(val.title);
-      return acc;
-    }, []);
-    movieTitle.innerHTML = "";
+  const titles = data.reduce((acc, val) => {
+    acc.push(val.title);
+    return acc;
+  }, []);
 
-    for (let val of titles) {
-      console.log(val);
-      let option = document.createElement("option");
-      option.setAttribute("value", val);
-      console.log(option);
+  for (let val of titles) {
+    let option = document.createElement("option");
+    option.setAttribute("value", val);
 
-      let optionText = document.createTextNode(val);
-      option.appendChild(optionText);
+    let optionText = document.createTextNode(val);
+    option.appendChild(optionText);
 
-      movieTitle.appendChild(option);
-    }
-  } else {
-    const titles = data.reduce((acc, val) => {
-      acc.push(val.title);
-      return acc;
-    }, []);
-
-    for (let val of titles) {
-      let option = document.createElement("option");
-      option.setAttribute("value", val);
-
-      let optionText = document.createTextNode(val);
-      option.appendChild(optionText);
-
-      movieTitle.appendChild(option);
-    }
+    movieTitle.appendChild(option);
   }
+  console.log(titles);
 
   table.innerHTML = tableContent;
 };
@@ -84,7 +63,6 @@ findYear.addEventListener("keyup", function (e) {
 
 movieTitle.addEventListener("change", (e) => {
   let title = e.target.value;
-
   let data = mainData.filter((val) => val.title === title);
   if (title === "Movie title") {
     populate(mainData);
